@@ -680,6 +680,8 @@ class Config:
                     mu = np.log((mean**2) / np.sqrt(var + mean**2))
                     sigma = np.sqrt(np.log(var/(mean**2) + 1))
                     raw = np.random.lognormal(mu, sigma, size=(Nvol, Npart))
+                    # Sort particles by size to assure a realistic electricalconnectivity
+                    raw = np.sort(raw, axis=1)[:, ::-1]
             else:
                 # use user-defined PSD
                 raw = self['specified_psd'][trode]
